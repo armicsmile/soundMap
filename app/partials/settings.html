@@ -1,0 +1,67 @@
+<h1>Map Settings <small>customize your map</small></h1>
+<div class="settings-main">
+	<div class="demi">
+		<fieldset id="settings-group-selection" class="settings-group">
+			<h4><span class="glyphicon glyphicon-search"></span>&nbsp;Accounts Selection</h4>
+			<div class="form-group">
+				<label for="settings-select-followers-gt" class="control-label">Followers count threshold:</label>
+				<input id="settings-followers-gt" type="number" min="0" class="form-control" ng-model="settings.selectParameters.followersGt">
+				<p class="help-block">Do not display on the map accounts that have less than this many followers.</p>
+			</div>
+			<div class="form-group">
+				<input id="settings-select-following-back" type="checkbox" ng-model="settings.selectParameters.followingBack">
+				<label for="settings-select-following-back">Only display bi-directional relations</label>
+				<p class="help-block">Only select account that follow back</p>
+			</div>
+		</fieldset>
+		<fieldset id="settings-group-rendering" class="settings-group">
+			<h4><span class="glyphicon glyphicon-eye-open"></span>&nbsp;Map Rendering</h4>
+			<h5>Nodes</h3>
+			<div class="form-group">
+				<label for="settings-rendering-nodes-color" class="control-label"><span class="glyphicon glyphicon-stop" style="color:{{settings.mapRendering.nodes.color}};"></span>Color:</label>
+				<div class="input-group">
+					<span class="input-group-addon glyphicon glyphicon-edit"></span>
+					<input colorpicker class="form-control" type="text" ng-model="settings.mapRendering.nodes.color"/>
+				</div>
+			</div>
+			<h5>Edges</h3>
+			<div class="form-group">
+				<label for="settings-rendering-nodes-color" class="control-label"><span class="glyphicon glyphicon-stop" style="color:{{settings.mapRendering.edges.color}};"></span>Color:</label>
+				<div class="input-group">
+					<span class="input-group-addon glyphicon glyphicon-edit"></span>
+					<input colorpicker class="form-control" type="text" ng-model="settings.mapRendering.edges.color"/>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+	<div class="demi">
+		<fieldset id="settings-group-root" class="settings-group">
+			<h4><span class="glyphicon glyphicon-user"></span>&nbsp;Root Account</h4>
+			<div class="form-group">
+				<label for="settings-root-id" class="control-label">Root account id:</label>
+				<div class="input-group">
+					<span class="input-group-addon glyphicon glyphicon-search"></span>
+					<input id="settings-root-id" type="text" class="form-control" ng-model="rootAccountQuery">
+					<span class="input-group-btn">
+						<button class="btn btn-primary" ng-click="queryAccounts(rootAccountQuery)">Search</button>
+					</span>
+				</div>
+				<div id="settings-root-select" ng-if="accounts.length">
+					<table class="table table-hover">
+						<thead>
+							<th>
+								<td></td>
+								<td>account name</td>
+								<td>link</td>
+								<td></td>
+							</th>
+							<tbody>
+								<tr ng-repeat="(key, value) in accounts"></tr>
+							</tbody>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</fieldset>	
+	</div>
+</div>

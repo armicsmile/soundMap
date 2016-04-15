@@ -1,0 +1,46 @@
+/* GENERAL */
+.demi {
+	display: inline-block;
+	width: 45%;
+	vertical-align: top;
+}
+header {
+	background-color: #F70 !important;
+}
+header a, header span {
+	color: #FFF !important;
+}
+
+body .main {
+	width: 60%;
+	margin: 100px auto;
+}
+
+/* 404 page */
+.not-found {
+	padding-top: 50px;
+	text-align: center;
+}
+.not-found h1 {
+	font-size: 300px;
+}
+
+/* SETTINGS FORM */
+.settings-main fieldset {
+	width: 100%;
+	border: 1px solid #CCC;
+	border-radius: 4px;
+	margin: 5px;
+	padding: 10px;
+}
+.settings-main fieldset h4 {
+	text-align: right;
+	text-decoration: underline;
+}
+.settings-main .form-group {
+	margin: 0 20px;
+}
+
+.input-group-addon {
+	top: 0;
+}

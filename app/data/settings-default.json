@@ -1,0 +1,15 @@
+{
+	"rootAccount": null,
+	"selectParameters": {
+		"followersGt": 5000,
+		"followingBack": true
+	},
+	"mapRendering": {
+		"nodes": {
+			"color": "#FFF"
+		},
+		"edges": {
+			"color": "#000"
+		}
+	}
+}
