@@ -14,7 +14,7 @@ soundMapApp.config(['$routeProvider',
 	function($routeProvider) {
 		$routeProvider.when('/', {
 			templateUrl: 'partials/home.html',
-        	controller: 'IndexCtrl'
+        	controller: 'IndexController'
 		}).when('/settings', {
 			templateUrl: 'partials/settings.html',
 			controller: 'SettingsController'

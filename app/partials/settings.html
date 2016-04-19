@@ -9,9 +9,12 @@
 				<p class="help-block">Do not display on the map accounts that have less than this many followers.</p>
 			</div>
 			<div class="form-group">
-				<input id="settings-select-following-back" type="checkbox" ng-model="settings.selectParameters.followingBack">
-				<label for="settings-select-following-back">Only display bi-directional relations</label>
-				<p class="help-block">Only select account that follow back</p>
+				<input id="settings-select-hasMaxDepth" type="checkbox" ng-model="settings.selectParameters.hasMaxDepth">
+				<label for="settings-select-hasMaxDepth">Allow max depth to the graph search</label>
+				<br>
+				<label for="settings-select-maxDepth">Max depth</label>
+				<input id="settings-select-maxDepth" type="text" class="form-control" ng-model="settings.selectParameters.maxDepth" ng-disabled="!settings.selectParameters.hasMaxDepth">
+				<p class="help-block">Maximal distance for a node to the root node</p>
 			</div>
 		</fieldset>
 		<fieldset id="settings-group-rendering" class="settings-group">
@@ -37,28 +40,47 @@
 	<div class="demi">
 		<fieldset id="settings-group-root" class="settings-group">
 			<h4><span class="glyphicon glyphicon-user"></span>&nbsp;Root Account</h4>
+			<div id="current-root-account">
+				<p ng-if="!settings.rootAccount">No account selected for the moment</p>
+				<div class="account-details" ng-if="settings.rootAccount">
+					<h4 class="title">{{settings.rootAccount.username}} <small>(#{{settings.rootAccount.id}})</small></h4>
+					<a class="ablock" href="{{settings.rootAccount.permalink_url}}" target="_blank">
+						<img src="{{settings.rootAccount.avatar_url}}">
+					</a>
+					<table>
+						<tr ng-if="settings.rootAccount.country">
+							<th>Country</th>
+							<td>{{settings.rootAccount.country}}</td>
+						</tr>
+						<tr>
+							<th>Followers</th>
+							<td>{{settings.rootAccount.followers_count}}</td>
+						</tr>
+						<tr>
+							<th>Following</th>
+							<td>{{settings.rootAccount.following_count}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
 			<div class="form-group">
-				<label for="settings-root-id" class="control-label">Root account id:</label>
-				<div class="input-group">
-					<span class="input-group-addon glyphicon glyphicon-search"></span>
+				<form class="input-group" ng-submit="queryAccounts(rootAccountQuery)">
 					<input id="settings-root-id" type="text" class="form-control" ng-model="rootAccountQuery">
 					<span class="input-group-btn">
-						<button class="btn btn-primary" ng-click="queryAccounts(rootAccountQuery)">Search</button>
+						<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
 					</span>
-				</div>
+				</form>
 				<div id="settings-root-select" ng-if="accounts.length">
 					<table class="table table-hover">
-						<thead>
-							<th>
-								<td></td>
-								<td>account name</td>
-								<td>link</td>
-								<td></td>
-							</th>
-							<tbody>
-								<tr ng-repeat="(key, value) in accounts"></tr>
-							</tbody>
-						</thead>
+						<h6>Select one of these accounts <small>({{accounts.length}})</small></h6>
+						<tbody>
+							<tr ng-repeat="account in accounts" class="accounts-item">
+								<td><img class="account-avatar" src="{{account.avatar_url}}" alt="{{account.username}}"></td>
+								<td>{{account.username}}</td>
+								<td><button class="btn btn-link" ng-click="setRootAccount(account)"><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;SELECT</button></td>
+								<td><a href="{{account.permalink_url}}" title="{{account.username}}'s account" target="_blank"><span class="glyphicon glyphicon-link"></span></a></td>
+							</tr>
+						</tbody>
 					</table>
 				</div>
 			</div>

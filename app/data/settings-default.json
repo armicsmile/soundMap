@@ -2,7 +2,8 @@
 	"rootAccount": null,
 	"selectParameters": {
 		"followersGt": 5000,
-		"followingBack": true
+		"hasMaxDepth": true,
+		"maxDepth": 6
 	},
 	"mapRendering": {
 		"nodes": {
@@ -10,6 +11,11 @@
 		},
 		"edges": {
 			"color": "#000"
+		}
+	},
+	"connections": {
+		"soundcloud": {
+			"clientId": "8047dcb3f06b54138aae548c83a3a076"
 		}
 	}
 }

@@ -12,34 +12,49 @@ soundMapServices.factory('Settings', ['$resource',
 		if (! settingsLoaded) {
 			settings = $resource('data/settings-default.json', {}, {
 				query: {method: 'GET', params: {}, isArray: false}
-			}).get();
+			});
 			settingsLoaded = true;
 		}
-		return settings;
+		return settings.get();
 	}
 ]);
 
-/** Connetor class */
-function SoundcloudConnector (config) {
+/** Connector class */
+function SoundcloudConnector () {
 	/** init routine */
-	this.initialize = function () {
-		this.config = config;
-		SC.initialize(this.config.clientId);
+	this.initialize = function (appKey) {
+		this.appKey = appKey;
+		SC.initialize({
+			client_id: this.appKey
+		});
 		return this;
 	}
 
 	/** get users with a query */
-	this.queryUsers = function (query, callback) {
-		SC.get('/users', {
-			q: query
-		}).then(callback(users));
+	this.queryUsers = function (query) {
+		return SC.get('/users', {
+			"q": query
+		});
 	}
 }
-/* Soundcloud API connector */
+/** Soundcloud API connector */
 soundMapServices.factory('Soundcloud', ['$resource',
 	function ($resource) {
-		return $resource('data/soundcloud-config.json', {}, {
-				query: {method: 'GET', params: {}, isArray: false}
-			}).get();
+		var connector = new SoundcloudConnector(),
+			settings = $resource('data/settings-default.json', {}, {
+			query: {method: 'GET', params: {}, isArray: false}
+		});
+		settings.get(function (data) {
+			connector.initialize(data.connections.soundcloud.clientId);
+		});
+		return connector;
+	}
+]);
+
+/** Map Data service */
+// Map data is a simple dictionary
+var mapData = new MapGraph();
+soundMapServices.factory('Mapdata', [function () {
+		return mapData;
 	}
 ]);
