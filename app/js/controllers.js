@@ -8,25 +8,36 @@ var soundMapControllers = angular.module('soundMapControllers', []);
 soundMapControllers.controller('IndexController', ['$scope', function($scope) {}]);
 
 /** Map controller */
-soundMapControllers.controller('MapController', ['$scope', 'Settings', 'Mapdata',
-	function($scope, Settings) {
+soundMapControllers.controller('MapController', ['$scope', 'Settings', 'Soundcloud', 'Mapdata',
+	function($scope, Settings, Soundcloud, Mapdata) {
 		$scope.settings = Settings;
+		$scope.mapData = Mapdata;
 
-		// $scope.populateMap = function () {
-		// 	// Reset graph
-		// 	this.resetGraph();
-		// 	// create root node and add it to the Graph
-		// 	this.addNode($scope.settings.rootAccount);
-		// };
+		$scope.populateMap = function () {
+			// Reset graph
+			$scope.resetGraph();
+			// create root node and add it to the Graph
+			var rootNode = $scope.addNode($scope.settings.rootAccount);
+			$scope.seekNeighbors(rootNode);
+		};
 
-		// $scope.resetGraph = function () {
-		// 	Mapdata = {};
-		// }
+		$scope.resetGraph = function () {
+			Mapdata = new MapGraph();
+		}
 
-		// $scope.addNode = function (data) {
-		// 	var node = new Node(data);
-		// 	Mapdata.addNode(node.data.id, node.data);
-		// };
+		$scope.addNode = function (data) {
+			var node = new Node(data);
+			Mapdata.addNode(node.data.id, node.data);
+			return node;
+		};
+
+		$scope.seekNeighbors = function (node) {
+			var followings = {};
+			Soundcloud.queryFollowings(node.data, followings);
+		};
+
+		$scope.populateMap();
+
 	}]
 );
 
